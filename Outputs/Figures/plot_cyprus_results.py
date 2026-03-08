@@ -92,8 +92,12 @@ PALETTE_CARBON = [INK, "#3a5080", BLUE, GREEN, GOLD, RED]
 
 mpl.rcParams.update({
     # fonts
-    "font.family":          "serif",
-    "font.serif":           ["Times New Roman", "Times", "DejaVu Serif"],
+    "font.family":          "sans-serif",
+    "font.sans-serif":      ["Arial", "Helvetica", "DejaVu Sans"],
+    "mathtext.fontset":     "custom",
+    "mathtext.rm":          "Arial",
+    "mathtext.it":          "Arial:italic",
+    "mathtext.bf":          "Arial:bold",
     "font.size":            9,
     "axes.titlesize":       10,
     "axes.labelsize":       9,
