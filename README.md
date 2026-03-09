@@ -118,7 +118,7 @@ Sensitivity mode writes a single combined summary table (no per-scenario dispatc
 Plotting (single plotting script):
 
 ```bash
-python model/plot_cyprus_results.py
+python model/plot_cyprus_results_report.py
 ```
 
 This script reads `model/outputs/base_dispatch.csv` and `model/outputs/sensitivity_results.csv`
@@ -142,4 +142,4 @@ Edit `model/params.jl`:
 - `outputs.jl`: KPI extraction, dispatch export, terminal summaries
 - `run_base.jl`: base case run
 - `run_sensitivity.jl`: full sensitivity sweep
-- `plot_cyprus_results.py`: figure pack for the paper
+- `plot_cyprus_results_report.py`: figure pack for the paper
