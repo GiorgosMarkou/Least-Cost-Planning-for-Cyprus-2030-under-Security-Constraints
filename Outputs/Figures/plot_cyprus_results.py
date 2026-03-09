@@ -1,7 +1,7 @@
 """
-plot_cyprus_results.py
-======================
-Academic-quality figures for the Cyprus 2030 capacity-expansion study.
+plot_cyprus_results_report.py
+=============================
+Report subset of figures for the Cyprus 2030 capacity-expansion study.
 Reads sensitivity_results.csv and base_dispatch.csv directly.
 
 Usage
@@ -13,33 +13,12 @@ Outputs (in ./model/outputs/figures/)
     fig01_cost_decomposition_base.pdf
     fig01b_investment_decomposition_base.pdf
     fig02_generation_mix_base.pdf
-    fig03_cost_vs_carbon.pdf
-    fig04_cost_vs_oil.pdf
     fig05_investment_vs_carbon.pdf
-    fig06_battery_vs_carbon.pdf
-    fig07_carbon_cost_component.pdf
-    fig08_fuel_mix_vs_carbon.pdf
-    fig09_curtailment_vs_carbon.pdf
-    fig10_nse_vs_carbon.pdf
-    fig11_oil_generation_vs_factor.pdf
-    fig12_investment_cost_vs_oil.pdf
-    fig13_oil_phase_down_table.pdf
+    fig13_oil_phase_down.pdf
     fig14_dispatch_profile_week.pdf
     fig15_duration_curve.pdf
-    fig16_cost_emissions_pareto.pdf
+    fig19_tornado_sensitivity.pdf
     fig21_capacity_before_after_base.pdf
-    fig22_capacity_composition_base.pdf
-    fig23_battery_capacity_before_after_base.pdf
-    fig24_total_capacity_vs_carbon.pdf
-    fig25_total_capacity_vs_oil.pdf
-    fig26_base_capacity_factor.pdf
-    fig27_oil0_cost_reliability_vs_carbon.pdf
-    fig28_oil0_worth_it_tradeoff.pdf
-    fig29_oil0_abatement_cost_vs_carbon.pdf
-    fig30_lowoil_cost_reliability_vs_carbon.pdf
-    fig31_lowoil_worth_it_vs_oil10.pdf
-    fig32_base_curtailment_monthly.pdf
-    fig33_cost_heatmap_voll_oil_carbon.pdf
     fig34_build_decision_ranges_boxplot.pdf
     table34_build_decision_ranges.csv
 
@@ -142,7 +121,29 @@ mpl.rcParams.update({
     "pdf.fonttype":         42,   # embeds fonts in PDF
 })
 
+# Report-only export filter.
+# The script still computes all panels from the original plotting pack, but
+# only this subset is written to disk for publication reporting.
+REPORT_FIGURES = {
+    "fig01_cost_decomposition_base.pdf",
+    "fig01b_investment_decomposition_base.pdf",
+    "fig02_generation_mix_base.pdf",
+    "fig05_investment_vs_carbon.pdf",
+    "fig13_oil_phase_down.pdf",
+    "fig14_dispatch_profile_week.pdf",
+    "fig15_duration_curve.pdf",
+    "fig19_tornado_sensitivity.pdf",
+    "fig21_capacity_before_after_base.pdf",
+    "fig34_build_decision_ranges_boxplot.pdf",
+}
+
 def savefig(name):
+    # Skip non-report figures while still closing the active figure to keep
+    # memory usage stable across the long plotting script.
+    if name not in REPORT_FIGURES:
+        plt.close()
+        print(f"  ·  skipped {name}")
+        return
     path = os.path.join(OUT_DIR, name)
     plt.savefig(path, bbox_inches="tight")
     plt.savefig(path.replace(".pdf", ".png"), bbox_inches="tight", dpi=200)
